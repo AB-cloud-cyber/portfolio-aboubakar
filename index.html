@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aboubakar Mohaman — Portfolio 3D</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #0d0d1a, #1a1a2e, #16213e);
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    overflow: hidden; perspective: 2000px;
+  }
+
+  /* ── Scene ── */
+  .scene {
+    width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center;
+    perspective: 2000px; position: relative;
+  }
+
+  /* ── Book ── */
+  .book {
+    width: 860px; height: 580px; position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(6deg) rotateY(-4deg);
+    transition: transform 0.8s cubic-bezier(.22,1,.36,1);
+  }
+  .book:hover { transform: rotateX(4deg) rotateY(-2deg); }
+
+  /* ── Book covers (front & back) ── */
+  .book-cover {
+    position: absolute; width: 100%; height: 100%;
+    border-radius: 4px 16px 16px 4px;
+    background: linear-gradient(135deg, #0a1628, #1a2a4a);
+    border: 1px solid rgba(232,184,75,0.15);
+    box-shadow:
+      -4px 4px 20px rgba(0,0,0,0.6),
+      inset 0 0 60px rgba(232,184,75,0.03);
+    transform: translateZ(-12px);
+    backface-visibility: hidden;
+  }
+  .book-cover::before {
+    content: ''; position: absolute; inset: 0;
+    border-radius: 4px 16px 16px 4px;
+    background: linear-gradient(90deg, rgba(232,184,75,0.04) 0%, transparent 40%);
+  }
+  /* spine illusion on the left */
+  .book-cover::after {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 28px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.4), rgba(232,184,75,0.06));
+    border-radius: 4px 0 0 4px;
+  }
+
+  /* ── Page stack ── */
+  .pages {
+    position: absolute; width: 100%; height: 100%;
+    transform-style: preserve-3d;
+  }
+  .page {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    padding: 2.4rem 2.8rem 2rem 3.2rem;
+    background: linear-gradient(135deg, #faf8f5, #f5f0ea);
+    border-radius: 4px 16px 16px 4px;
+    box-shadow:
+      inset 0 0 30px rgba(0,0,0,0.03),
+      0 2px 8px rgba(0,0,0,0.08);
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transition: transform 0.7s cubic-bezier(.65,0,.35,1), box-shadow 0.7s;
+    overflow-y: auto;
+    display: flex; flex-direction: column;
+  }
+  .page::-webkit-scrollbar { width: 4px; }
+  .page::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+
+  /* page edge effect */
+  .page::after {
+    content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 6px;
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.04));
+  }
+
+  /* ── Flipped state (hidden behind) ── */
+  .page.flipped {
+    transform: rotateY(-180deg);
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.06);
+    pointer-events: none;
+  }
+
+  /* ── Active page ── */
+  .page.active { z-index: 20; }
+
+  /* ── Page-level scroll ── */
+  .page-scroll { flex: 1; overflow-y: auto; padding-right: 0.5rem; }
+  .page-scroll::-webkit-scrollbar { width: 3px; }
+  .page-scroll::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+
+  /* ── Cover page content ── */
+  .page.page-cover-content {
+    background: linear-gradient(135deg, #0f1a2e, #1a2a4a);
+    border: none; color: #fff;
+  }
+  .page-cover-content::after { display: none; }
+  .cover-inner {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    height: 100%; text-align: center;
+  }
+  .cover-inner .photo {
+    width: 120px; height: 120px; border-radius: 50%;
+    border: 3px solid var(--gold); object-fit: cover;
+    margin-bottom: 1rem; box-shadow: 0 0 40px rgba(232,184,75,0.15);
+  }
+  .cover-inner h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: 1px; }
+  .cover-inner h1 span { color: var(--gold); }
+  .cover-inner .sub { color: #8fa8c8; font-size: 1rem; margin-bottom: 0.3rem; }
+  .cover-inner .tagline { color: #6c7a92; font-size: 0.85rem; margin-bottom: 1.5rem; }
+  .cover-btns { display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center; }
+  .cover-btns a {
+    padding: 0.6rem 1.6rem; border-radius: 50px; font-weight: 600; font-size: 0.85rem;
+    transition: all .3s; cursor: pointer; text-decoration: none;
+  }
+  .cover-btns .primary {
+    background: var(--gold); color: var(--dark); box-shadow: 0 4px 20px rgba(232,184,75,0.3);
+  }
+  .cover-btns .primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(232,184,75,0.4); }
+  .cover-btns .outline {
+    border: 2px solid rgba(232,184,75,0.4); color: var(--gold);
+    background: rgba(232,184,75,0.05);
+  }
+  .cover-btns .outline:hover { background: var(--gold); color: var(--dark); transform: translateY(-2px); }
+  .cover-decor {
+    position: absolute; top: 1.5rem; right: 2rem; font-size: 0.7rem;
+    color: rgba(232,184,75,0.2); font-weight: 700; writing-mode: vertical-rl;
+    letter-spacing: 4px;
+  }
+
+  /* ── Interior page content styles ── */
+  .page-label {
+    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px;
+    color: var(--gold); font-weight: 700; margin-bottom: 0.2rem;
+  }
+  .page-title {
+    font-size: 1.6rem; font-weight: 700; color: var(--navy);
+    margin-bottom: 0.1rem;
+  }
+  .page-divider { width: 50px; height: 2px; background: var(--gold); margin: 0.6rem 0 1rem; }
+
+  .page-text { font-size: 0.92rem; color: #444; line-height: 1.7; margin-bottom: 0.8rem; }
+  .page-text strong { color: var(--navy); }
+
+  /* stats */
+  .stats-mini { display: flex; gap: 1rem; margin-top: 0.8rem; flex-wrap: wrap; }
+  .stats-mini div {
+    background: #fff; border-radius: 10px; padding: 0.6rem 1.2rem;
+    border: 1px solid #eee; text-align: center; min-width: 90px;
+  }
+  .stats-mini .num { font-size: 1.3rem; font-weight: 800; color: var(--navy); }
+  .stats-mini .lbl { font-size: 0.7rem; color: #888; }
+
+  /* skills in book */
+  .skills-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.5rem; }
+  .skill-mini {
+    background: #fff; border-radius: 10px; padding: 0.8rem 1rem;
+    border: 1px solid #eee; border-left: 3px solid var(--navy);
+  }
+  .skill-mini h4 { font-size: 0.85rem; color: var(--navy); margin-bottom: 0.2rem; }
+  .skill-mini p { font-size: 0.78rem; color: #666; line-height: 1.4; }
+  .skill-mini.gold { border-left-color: var(--gold); }
+  .skill-mini.green { border-left-color: var(--green); }
+  .skill-mini.purple { border-left-color: var(--purple); }
+  .skill-mini .tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.3rem; }
+  .skill-mini .tags span {
+    background: #eef2f7; color: var(--navy); font-size: 0.65rem;
+    padding: 0.1rem 0.5rem; border-radius: 50px;
+  }
+
+  /* projects in book */
+  .project-mini {
+    background: #fff; border-radius: 10px; padding: 0.9rem 1rem; margin-bottom: 0.7rem;
+    border: 1px solid #eee; transition: all .3s;
+  }
+  .project-mini:hover { transform: translateX(4px); box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
+  .project-mini .p-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.2rem; }
+  .project-mini h4 { font-size: 0.95rem; color: var(--navy); }
+  .project-mini .p-badge {
+    background: var(--gold); color: var(--dark); font-size: 0.6rem; font-weight: 700;
+    padding: 0.15rem 0.6rem; border-radius: 50px; text-transform: uppercase;
+  }
+  .project-mini p { font-size: 0.78rem; color: #666; line-height: 1.4; }
+  .project-mini .p-tech { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.3rem; }
+  .project-mini .p-tech span {
+    background: #eef2f7; color: var(--navy); font-size: 0.6rem;
+    padding: 0.1rem 0.5rem; border-radius: 50px;
+  }
+
+  /* interests in book */
+  .interests-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  .interest-mini {
+    background: #fff; border-radius: 10px; padding: 0.8rem 1rem;
+    border: 1px solid #eee; text-align: center;
+  }
+  .interest-mini h4 { font-size: 0.85rem; color: var(--navy); margin-bottom: 0.2rem; }
+  .interest-mini p { font-size: 0.75rem; color: #666; line-height: 1.4; }
+  .interest-mini lord-icon { width: 36px; height: 36px; margin-bottom: 0.3rem; }
+
+  /* contact in book */
+  .contact-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 0.5rem;
+  }
+  .contact-info p { font-size: 0.85rem; color: #444; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+  .contact-info a { color: var(--navy); font-weight: 500; }
+  .contact-info a:hover { color: var(--gold); }
+  .contact-form input, .contact-form textarea {
+    width: 100%; padding: 0.6rem 0.8rem; margin-bottom: 0.6rem;
+    border: 1px solid #ddd; border-radius: 8px; font-size: 0.85rem;
+    font-family: inherit; background: #fff; transition: all .3s;
+  }
+  .contact-form input:focus, .contact-form textarea:focus {
+    outline: none; border-color: var(--gold); box-shadow: 0 0 10px rgba(232,184,75,0.1);
+  }
+  .contact-form textarea { min-height: 70px; resize: vertical; }
+  .contact-form button {
+    background: var(--navy); color: #fff; border: none; padding: 0.6rem 1.5rem;
+    border-radius: 8px; font-size: 0.85rem; cursor: pointer; font-weight: 600;
+    transition: all .3s;
+  }
+  .contact-form button:hover { background: var(--gold); color: var(--dark); }
+
+  /* ── Navigation ── */
+  .nav-controls {
+    display: flex; align-items: center; gap: 1.2rem;
+    margin-top: 2rem;
+  }
+  .nav-btn {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 2px solid rgba(232,184,75,0.3);
+    background: rgba(15,52,96,0.1);
+    color: var(--gold); font-size: 1rem;
+    cursor: pointer; transition: all .3s;
+    display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .nav-btn:hover { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+  .nav-btn:disabled { opacity: 0.2; cursor: default; }
+  .nav-btn:disabled:hover { background: rgba(15,52,96,0.1); color: var(--gold); border-color: rgba(232,184,75,0.3); }
+  .page-dots { display: flex; gap: 6px; }
+  .page-dots span {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(232,184,75,0.2); cursor: pointer; transition: all .3s;
+  }
+  .page-dots span.active { background: var(--gold); transform: scale(1.4); }
+  .page-num { font-size: 0.8rem; color: rgba(232,184,75,0.5); font-weight: 600; letter-spacing: 1px; min-width: 50px; text-align: center; }
+
+  /* ── Background ambient glow ── */
+  .ambient {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+  }
+  .ambient::before, .ambient::after {
+    content: ''; position: absolute; border-radius: 50%;
+    filter: blur(120px); opacity: 0.15;
+  }
+  .ambient::before {
+    width: 500px; height: 500px; background: var(--gold);
+    top: -100px; right: -100px;
+  }
+  .ambient::after {
+    width: 400px; height: 400px; background: var(--purple);
+    bottom: -150px; left: -100px;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .book { width: 94vw; height: 72vw; }
+    .page { padding: 1.5rem 1.5rem 1rem 2rem; }
+    .cover-inner h1 { font-size: 1.6rem; }
+    .cover-inner .photo { width: 80px; height: 80px; }
+    .page-title { font-size: 1.2rem; }
+    .skills-mini { grid-template-columns: 1fr; }
+    .interests-mini { grid-template-columns: 1fr; }
+    .contact-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .book { width: 96vw; height: 80vh; }
+    .page { padding: 1rem 1rem 1rem 1.5rem; }
+    .cover-inner h1 { font-size: 1.2rem; }
+    .cover-inner .photo { width: 60px; height: 60px; }
+    .skills-mini, .interests-mini, .contact-row { grid-template-columns: 1fr; }
+    .nav-controls { gap: 0.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ambient"></div>
+
+<div class="scene">
+  <div class="book" id="book">
+
+    <!-- front cover (physical book cover) -->
+    <div class="book-cover"></div>
+
+    <!-- pages -->
+    <div class="pages" id="pages">
+
+      <!-- PAGE 0: Cover / Intro -->
+      <div class="page page-cover-content active" data-page="0">
+        <div class="cover-decor">PORTFOLIO 2026</div>
+        <div class="cover-inner">
+          <img src="photo.jpg" alt="Aboubakar Mohaman" class="photo">
+          <h1>ABOUBAKAR <span>MOHAMAN</span></h1>
+          <div class="sub">Etudiant en Genie Informatique — IUT de Douala</div>
+          <div class="tagline">Python lover, Data Science passionne, basketteur du dimanche (et des autres jours)</div>
+          <div class="cover-btns">
+            <a href="#" class="primary" onclick="event.preventDefault();flipTo(1)">Decouvrir</a>
+            <a href="CV_ABOUBAKAR_MOHAMAN.docx" class="outline">CV</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 1: About -->
+      <div class="page flipped" data-page="1">
+        <div class="page-label">A propos</div>
+        <div class="page-title">Qui suis-je ?</div>
+        <div class="page-divider"></div>
+        <div class="page-scroll">
+          <p class="page-text"><strong>Aboubakar Mohaman</strong>, 1re annee Genie Informatique a l'IUT de Douala. Sur le papier je suis etudiant, dans les faits je prefere coder un projet que de recopier un cours.</p>
+          <p class="page-text">Ma zone de confort ? <strong>Python</strong>, les bases de donnees, et tout ce qui touche a la <strong>Data Science</strong> et au <strong>Machine Learning</strong>. Le HTML/CSS/JS ? Heureusement que l'IA existe.</p>
+          <p class="page-text">Membre actif de <strong>Striving For All (SFA)</strong>, je partage ce que j'apprends. La connaissance qui ne se partage pas ne sert a rien.</p>
+          <div class="stats-mini">
+            <div><div class="num">3</div><div class="lbl">Projets majeurs</div></div>
+            <div><div class="num">5</div><div class="lbl">Certificats SFA</div></div>
+            <div><div class="num">1</div><div class="lbl">Package PyPI</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 2: Skills -->
+      <div class="page flipped" data-page="2">
+        <div class="page-label">Competences</div>
+        <div class="page-title">Ma stack technique</div>
+        <div class="page-divider"></div>
+        <div class="page-scroll">
+          <div class="skills-mini">
+            <div class="skill-mini">
+              <h4>Python & Data Science</h4>
+              <p>Mon royaume. Flask, Pandas, NumPy, scikit-learn.</p>
+              <div class="tags"><span>Python</span><span>Flask</span><span>Pandas</span><span>ML</span></div>
+            </div>
+            <div class="skill-mini gold">
+              <h4>Bases de donnees</h4>
+              <p>PostgreSQL, SQLite, Neon.tech, SQL couramment.</p>
+              <div class="tags"><span>PostgreSQL</span><span>SQLite</span><span>DBeaver</span></div>
+            </div>
+            <div class="skill-mini green">
+              <h4>Frontend</h4>
+              <p>L'IA gere pour moi. React, PWA, Jinja2.</p>
+              <div class="tags"><span>HTML/CSS</span><span>React</span><span>PWA</span></div>
+            </div>
+            <div class="skill-mini purple">
+              <h4>Outils</h4>
+              <p>Git, Vercel, PyCharm, Obsidian, PyPI.</p>
+              <div class="tags"><span>Git</span><span>Vercel</span><span>PyPI</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 3: Projects (overview) -->
+      <div class="page flipped" data-page="3">
+        <div class="page-label">Projets</div>
+        <div class="page-title">Ce que j'ai construit</div>
+        <div class="page-divider"></div>
+        <div class="page-scroll">
+          <div class="project-mini">
+            <div class="p-header"><h4>STIMULATION CAISSE</h4><span class="p-badge">Full Stack</span></div>
+            <p>Systeme de gestion de caisse — Flask, double backend SQLite/PostgreSQL, analyse data.</p>
+            <div class="p-tech"><span>Python</span><span>Flask</span><span>PostgreSQL</span><span>Pandas</span></div>
+          </div>
+          <div class="project-mini">
+            <div class="p-header"><h4>CONNECT-PRO</h4><span class="p-badge">Full Stack</span></div>
+            <p>Matching startups-investisseurs — TF-IDF, cosine similarity, React PWA, API Flask.</p>
+            <div class="p-tech"><span>React</span><span>Flask</span><span>scikit-learn</span><span>Vercel</span></div>
+          </div>
+          <div class="project-mini">
+            <div class="p-header"><h4>vibetodev</h4><span class="p-badge">Open Source</span></div>
+            <p>Package PyPI transformant un projet en parcours d'apprentissage — AST, Obsidian vault.</p>
+            <div class="p-tech"><span>Python</span><span>AST</span><span>Obsidian</span><span>CLI</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 4: Interests -->
+      <div class="page flipped" data-page="4">
+        <div class="page-label">Centres d'interet</div>
+        <div class="page-title">Ce qui me definit</div>
+        <div class="page-divider"></div>
+        <div class="page-scroll">
+          <div class="interests-mini">
+            <div class="interest-mini">
+              <lord-icon src="https://cdn.lordicon.com/isugvogv.json" trigger="loop" delay="1000" colors="primary:#E87D2F,secondary:#ffffff" style="width:36px;height:36px"></lord-icon>
+              <h4>Basketball</h4>
+              <p>Accessoirement je fais 1m65 et je joue. On dit que je suis "shifty" — laissez-moi rever.</p>
+            </div>
+            <div class="interest-mini">
+              <lord-icon src="https://cdn.lordicon.com/ssvybplt.json" trigger="loop" delay="1500" colors="primary:#0F3460,secondary:#3776AB" style="width:36px;height:36px"></lord-icon>
+              <h4>Python mon amour</h4>
+              <p>Si ca peut se faire en Python, je le fais en Python. Point.</p>
+            </div>
+            <div class="interest-mini">
+              <div style="display:flex;justify-content:center;margin-bottom:0.3rem;">📊</div>
+              <h4>Data Science & ML</h4>
+              <p>Faire parler les donnees, entrainer des modeles. Pandas, scikit-learn.</p>
+            </div>
+            <div class="interest-mini">
+              <lord-icon src="https://cdn.lordicon.com/xxjfcfiy.json" trigger="loop" delay="2000" colors="primary:#0F3460,secondary:#6C63FF" style="width:36px;height:36px"></lord-icon>
+              <h4>Veille techno</h4>
+              <p>GitHub trending, Hacker News. J'essaie d'arriver avant la hype.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 5: Contact -->
+      <div class="page flipped" data-page="5">
+        <div class="page-label">Contact</div>
+        <div class="page-title">Parlons-en</div>
+        <div class="page-divider"></div>
+        <div class="contact-row">
+          <div class="contact-info">
+            <p>✉️ <a href="mailto:aboubakar.mohaman@sfaedu.org">aboubakar.mohaman@sfaedu.org</a></p>
+            <p>💬 <a href="https://wa.me/237681369973" target="_blank">+237 681 369 973</a></p>
+            <p>🐙 <a href="https://github.com/AB-cloud-cyber" target="_blank">github.com/AB-cloud-cyber</a></p>
+            <p>📦 <a href="https://pypi.org/project/vibetodev/" target="_blank">pypi.org/project/vibetodev</a></p>
+            <p>📍 Douala, Cameroun</p>
+            <br>
+            <p style="font-size:0.85rem;color:#888;"><em>Disponible pour un stage en IA et Data</em></p>
+          </div>
+          <div class="contact-form">
+            <form action="mailto:aboubakar.mohaman@sfaedu.org" method="post" enctype="text/plain">
+              <input type="text" name="nom" placeholder="Votre nom" required>
+              <input type="email" name="email" placeholder="Votre email" required>
+              <input type="text" name="sujet" placeholder="Sujet" required>
+              <textarea name="message" placeholder="Votre message..." required></textarea>
+              <button type="submit">Envoyer</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /pages -->
+
+    <!-- Navigation controls -->
+    <div style="position:absolute;bottom:-60px;left:0;right:0;display:flex;justify-content:center;z-index:30;">
+      <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn" disabled>&#10094;</button>
+        <div class="page-dots" id="pageDots"></div>
+        <span class="page-num" id="pageNum">1 / 6</span>
+        <button class="nav-btn" id="nextBtn">&#10095;</button>
+      </div>
+    </div>
+
+  </div><!-- /book -->
+</div><!-- /scene -->
+
+<script>
+(function() {
+  var pages = document.querySelectorAll('.page');
+  var total = pages.length;
+  var current = 0;
+  var flipping = false;
+
+  // Generate dots
+  var dotsContainer = document.getElementById('pageDots');
+  for (var i = 0; i < total; i++) {
+    var dot = document.createElement('span');
+    if (i === 0) dot.classList.add('active');
+    dot.dataset.index = i;
+    dot.addEventListener('click', function() { flipTo(parseInt(this.dataset.index)); });
+    dotsContainer.appendChild(dot);
+  }
+
+  function updateUI() {
+    document.getElementById('prevBtn').disabled = (current === 0);
+    document.getElementById('nextBtn').disabled = (current === total - 1);
+    document.getElementById('pageNum').textContent = (current + 1) + ' / ' + total;
+    var dots = dotsContainer.children;
+    for (var i = 0; i < dots.length; i++) {
+      dots[i].classList.toggle('active', i === current);
+    }
+  }
+
+  function flipTo(idx) {
+    if (flipping || idx === current) return;
+    if (idx < 0 || idx >= total) return;
+    flipping = true;
+
+    var goingForward = idx > current;
+
+    if (goingForward) {
+      // Flip all pages between current and idx
+      for (var i = current; i < idx; i++) {
+        var p = pages[i];
+        p.classList.remove('active');
+        p.classList.add('flipped');
+      }
+    } else {
+      // Unflip pages between idx and current
+      for (var i = current - 1; i >= idx; i--) {
+        var p = pages[i];
+        p.classList.remove('flipped');
+        p.classList.add('active');
+      }
+    }
+
+    current = idx;
+
+    // Ensure only the current page is active (for z-index)
+    for (var i = 0; i < total; i++) {
+      if (i === current) {
+        pages[i].classList.add('active');
+        pages[i].classList.remove('flipped');
+      } else if (i > current) {
+        pages[i].classList.add('flipped');
+        pages[i].classList.remove('active');
+      } else {
+        pages[i].classList.remove('active');
+        pages[i].classList.remove('flipped');
+      }
+    }
+
+    updateUI();
+
+    setTimeout(function() { flipping = false; }, 750);
+  }
+
+  // Expose to global scope for inline onclick
+  window.flipTo = flipTo;
+
+  document.getElementById('prevBtn').addEventListener('click', function() { flipTo(current - 1); });
+  document.getElementById('nextBtn').addEventListener('click', function() { flipTo(current + 1); });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') flipTo(current + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') flipTo(current - 1);
+  });
+
+  updateUI();
+})();
+</script>
+
+</body>
+</html>

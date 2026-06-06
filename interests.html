@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aboubakar Mohaman | Centres d'interet</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
+<style>
+  .interest-card .icon-img { width: 80px; height: 80px; object-fit: contain; margin-bottom: 0.5rem; transition: all .4s; border-radius: 12px; }
+  .interest-card:hover .icon-img { transform: scale(1.1); }
+  .interest-card .icon-img.circle { border-radius: 50%; width: 70px; height: 70px; object-fit: cover; }
+  .interest-card .icon-img.bordered { border: 2px solid #eee; padding: 4px; }
+  .interest-card .icon-img.github { filter: grayscale(0.3); transition: all .4s; }
+  .interest-card:hover .icon-img.github { filter: grayscale(0); transform: scale(1.1) rotate(-5deg); }
+  .interest-card .icon-img.chart { background: #1e1e2e; padding: 4px; }
+  .interest-card .icon-img.basketball { border-radius: 12px; object-fit: cover; height: 80px; }
+  .interest-card .icon-wrap { display: flex; justify-content: center; align-items: center; min-height: 80px; margin-bottom: 0.8rem; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">AB<span>.</span>Mohaman</div>
+  <ul>
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="about.html">A propos</a></li>
+    <li><a href="skills.html">Competences</a></li>
+    <li><a href="projects.html">Projets</a></li>
+    <li><a href="interests.html" class="active">Centres d'interet</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="page-section">
+  <h2 class="section-title">Centres d'interet</h2>
+  <div class="section-subtitle">Python lover, Data Science passionne, basketteur de 1m65 au cardio debordant — voici ce qui me definit</div>
+  <div class="divider"></div>
+  <div class="interests-grid">
+
+    <div class="interest-card">
+      <div class="icon-wrap">
+        <lord-icon src="https://cdn.lordicon.com/isugvogv.json" trigger="loop" delay="1000" colors="primary:#E87D2F,secondary:#ffffff" style="width:80px;height:80px"></lord-icon>
+      </div>
+      <h4>Basketball</h4>
+      <p>Accessoirement je fais 1m65 et je joue au basketball. On dit que je suis "shifty" — laissez-moi rever, un jour on me verra peut-etre en playoffs. (Bon deja le championnat interclasse ce serait un bon debut.)</p>
+    </div>
+
+    <div class="interest-card">
+      <div class="icon-wrap">
+        <lord-icon src="https://cdn.lordicon.com/ssvybplt.json" trigger="loop" delay="1500" colors="primary:#0F3460,secondary:#3776AB" style="width:70px;height:70px"></lord-icon>
+      </div>
+      <h4>Python mon amour</h4>
+      <p>Je code en Python comme on respire. Projets web, data science, scripts CLI, APIs, automatisation — si ca peut se faire en Python, je vais le faire en Python. Point.</p>
+    </div>
+
+    <div class="interest-card">
+      <div class="icon-wrap">
+        <img src="screenshots/matplotlib_chart.png" alt="Matplotlib chart" class="icon-img chart">
+      </div>
+      <h4>Data Science & ML</h4>
+      <p>Ma specialisation visee. Faire parler les donnees, entrainer des modeles, predire le futur (bon, le passe aussi). Pandas, NumPy, scikit-learn — ma stack preferee.</p>
+    </div>
+
+    <div class="interest-card">
+      <div class="icon-wrap">
+        <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" class="icon-img github bordered" style="width:65px;height:65px;">
+      </div>
+      <h4>Veille techno</h4>
+      <p>Toujours un oeil sur ce qui sort. Github trending, Hacker News, Reddit. Le domaine bouge vite, j'essaie de suivre — et si possible d'arriver avant la hype.</p>
+    </div>
+
+    <div class="interest-card">
+      <div class="icon-wrap">
+        <img src="screenshots/sfa_logo.png" alt="Striving For All" class="icon-img circle" style="border:2px solid var(--gold);padding:2px;">
+      </div>
+      <h4>Striving For All</h4>
+      <p>Membre actif de Striving For All (SFA), je partage ce que j'apprends parce que la connaissance qui ne se partage pas ne sert a rien.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Aboubakar Mohaman — Construit avec Python, du cafe, et beaucoup d'aide de l'IA pour le CSS</p>
+</footer>
+
+<script>
+(function() {
+  var els = document.querySelectorAll('.interest-card');
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(function(el) { el.classList.add('reveal'); obs.observe(el); });
+})();
+</script>
+
+</body>
+</html>

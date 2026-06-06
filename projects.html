@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aboubakar Mohaman | Projets</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
+<style>
+  .project-visual { position: relative; overflow: hidden; min-height: 300px; }
+  .project-visual img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity .5s; }
+  .project-visual img.active { opacity: 1; }
+  .project-visual .gallery-dots { position: absolute; bottom: 15px; left: 0; right: 0; display: flex; justify-content: center; gap: 8px; z-index: 3; }
+  .project-visual .gallery-dots span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; transition: all .3s; }
+  .project-visual .gallery-dots span.active { background: var(--gold); transform: scale(1.3); }
+  .project-visual .gallery-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; background: rgba(0,0,0,0.3); color: #fff; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: all .3s; opacity: 0; }
+  .project-card:hover .gallery-nav { opacity: 1; }
+  .project-visual .gallery-nav:hover { background: rgba(232,184,75,0.8); }
+  .project-visual .gallery-nav.prev { left: 10px; }
+  .project-visual .gallery-nav.next { right: 10px; }
+
+  .project-visual.sc { background: linear-gradient(135deg, var(--navy), var(--accent)); }
+  .project-visual.cp { background: linear-gradient(135deg, var(--green), #00A381); }
+  .project-visual.vtd { background: linear-gradient(135deg, var(--purple), #4834D4); }
+
+  .project-visual .overlay-label { position: absolute; top: 15px; left: 15px; z-index: 2; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); color: #fff; padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.5px; border: 1px solid rgba(255,255,255,0.1); }
+
+  @media (max-width: 768px) {
+    .project-visual { min-height: 220px; }
+    .project-visual .gallery-nav { opacity: 0.6; width: 30px; height: 30px; font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">AB<span>.</span>Mohaman</div>
+  <ul>
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="about.html">A propos</a></li>
+    <li><a href="skills.html">Competences</a></li>
+    <li><a href="projects.html" class="active">Projets</a></li>
+    <li><a href="interests.html">Centres d'interet</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="page-section">
+  <h2 class="section-title">Ce que j'ai construit</h2>
+  <div class="section-subtitle">(Des trucs concrets, pas des exercices de TD)</div>
+  <div class="divider"></div>
+  <div class="projects-grid">
+
+    <!-- STIMULATION CAISSE -->
+    <div class="project-card">
+      <div class="project-info">
+        <div class="badge">Full Stack</div>
+        <h3>STIMULATION CAISSE</h3>
+        <p>Systeme de gestion de caisse pour supermarche — interface web Flask, double backend SQLite/PostgreSQL, analyse de donnees integree, auto-config DBeaver.</p>
+        <div class="tech">
+          <span>Python</span><span>Flask</span><span>PostgreSQL</span>
+          <span>SQLite</span><span>Pandas</span><span>HTML/CSS</span>
+        </div>
+        <ul class="features">
+          <li>Interface POS web avec panier et lookup par CNI</li>
+          <li>Double backend SQLite/PostgreSQL, bascule dynamique</li>
+          <li>Analyse CA, panier moyen, percentiles, tendances</li>
+          <li>Auto-config DBeaver pour les connexions PG</li>
+          <li>Export CSV : global, classement, tendances</li>
+        </ul>
+      </div>
+      <div class="project-visual sc" data-gallery="sc">
+        <span class="overlay-label">Interface caisse</span>
+        <img src="screenshots/caisse_home.png" alt="Caisse accueil" class="active">
+        <img src="screenshots/caisse_products.png" alt="Caisse produits">
+        <img src="screenshots/dbeaver_config.png" alt="Config DBeaver">
+        <button class="gallery-nav prev">&#10094;</button>
+        <button class="gallery-nav next">&#10095;</button>
+        <div class="gallery-dots"></div>
+      </div>
+    </div>
+
+    <!-- CONNECT-PRO -->
+    <div class="project-card">
+      <div class="project-info">
+        <div class="badge">Full Stack</div>
+        <h3>CONNECT-PRO</h3>
+        <p>Plateforme de matching startups-investisseurs avec TF-IDF, similarite cosinus, interface React PWA et API Flask 7 endpoints.</p>
+        <div class="tech">
+          <span>React</span><span>Flask</span><span>PostgreSQL</span>
+          <span>scikit-learn</span><span>Vercel</span><span>PWA</span>
+        </div>
+        <ul class="features">
+          <li>Algorithme TF-IDF + cosine similarity pour le matching</li>
+          <li>React SPA deployee sur Vercel</li>
+          <li>API REST Flask, 7 endpoints</li>
+          <li>PostgreSQL sur Neon.tech</li>
+          <li>PWA installable sur mobile et desktop</li>
+        </ul>
+      </div>
+      <div class="project-visual cp" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a1a2e,#0F3460);">
+        <span class="overlay-label">Demo video</span>
+        <div style="position:relative;z-index:2;border:3px solid #333;border-radius:18px;overflow:hidden;box-shadow:0 0 40px rgba(0,0,0,0.3);width:200px;">
+          <video src="screenshots/connectpro_demo.mp4" controls playsinline style="width:100%;display:block;" poster="screenshots/connectpro_video.jpg"></video>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIBETODEV -->
+    <div class="project-card">
+      <div class="project-info">
+        <div class="badge">Open Source</div>
+        <h3>vibetodev</h3>
+        <p>Package PyPI qui transforme n'importe quel projet en parcours d'apprentissage — analyse AST, vault Obsidian, lecons, exercices avec validation.</p>
+        <div class="tech">
+          <span>Python</span><span>AST</span><span>Obsidian</span>
+          <span>PyPI</span><span>CLI</span><span>Pedagogie</span>
+        </div>
+        <ul class="features">
+          <li>Analyse AST de projets Python, extraction de concepts</li>
+          <li>9 modules pedagogiques (debutant a avance)</li>
+          <li>Generation de vault Obsidian avec lecons/exercices</li>
+          <li>Validation avec execution et feedback</li>
+          <li><code>pip install vibetodev</code> — c'est gratuit</li>
+        </ul>
+      </div>
+      <div class="project-visual vtd" data-gallery="vtd">
+        <span class="overlay-label">CLI en action</span>
+        <img src="screenshots/vibetodev_cli.png" alt="vibetodev CLI help" class="active">
+        <img src="screenshots/vibetodev_scan.png" alt="vibetodev scan">
+        <button class="gallery-nav prev">&#10094;</button>
+        <button class="gallery-nav next">&#10095;</button>
+        <div class="gallery-dots"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Aboubakar Mohaman — Construit avec Python, du cafe, et beaucoup d'aide de l'IA pour le CSS</p>
+</footer>
+
+<script>
+(function() {
+  // Gallery slideshow
+  document.querySelectorAll('[data-gallery]').forEach(function(el) {
+    var imgs = el.querySelectorAll('img');
+    if (imgs.length === 0) return;
+    var dots = el.querySelector('.gallery-dots');
+    var current = 0;
+    for (var i = 0; i < imgs.length; i++) {
+      var dot = document.createElement('span');
+      if (i === 0) dot.classList.add('active');
+      dot.dataset.index = i;
+      dot.addEventListener('click', function() { show(parseInt(this.dataset.index)); });
+      dots.appendChild(dot);
+    }
+    function show(idx) {
+      imgs[current].classList.remove('active');
+      dots.children[current].classList.remove('active');
+      current = (idx + imgs.length) % imgs.length;
+      imgs[current].classList.add('active');
+      dots.children[current].classList.add('active');
+    }
+    el.querySelector('.prev').addEventListener('click', function(e) { e.stopPropagation(); show(current - 1); });
+    el.querySelector('.next').addEventListener('click', function(e) { e.stopPropagation(); show(current + 1); });
+    setInterval(function() { show(current + 1); }, 5000);
+  });
+
+  // Reveal animation
+  var els = document.querySelectorAll('.project-card');
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(function(el) { el.classList.add('reveal'); obs.observe(el); });
+})();
+</script>
+
+</body>
+</html>

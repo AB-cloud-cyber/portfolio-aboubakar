@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aboubakar Mohaman | A propos</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="logo">AB<span>.</span>Mohaman</div>
+  <ul>
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="about.html" class="active">A propos</a></li>
+    <li><a href="skills.html">Competences</a></li>
+    <li><a href="projects.html">Projets</a></li>
+    <li><a href="interests.html">Centres d'interet</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="page-section">
+  <h2 class="section-title">Qui suis-je ?</h2>
+  <div class="divider"></div>
+
+  <div style="max-width:800px;margin:0 auto;">
+    <p style="margin-bottom:1.2rem;color:#555;font-size:1.05rem;"><strong style="color:var(--navy);">Aboubakar Mohaman</strong>, 1re annee Genie Informatique a l'IUT de Douala. Sur le papier je suis etudiant, dans les faits je suis un gars qui prefere coder un projet que de recopier un cours. Ca parait plus cool, non ?</p>
+
+    <p style="margin-bottom:1.2rem;color:#555;font-size:1.05rem;">Ma zone de confort ? <strong style="color:var(--navy);">Python</strong>, les bases de donnees, et tout ce qui touche a la <strong style="color:var(--navy);">Data Science</strong> et au <strong style="color:var(--navy);">Machine Learning</strong>. Je kiffe nettoyer des donnees, entrainer des modeles, et faire dire aux chiffres ce qu'ils cachent. Le HTML/CSS/JS ? Heureusement que l'IA existe. Je prefere laisser les machines faire le frontend pendant que je fais ce que j'aime : du vrai code qui a du sens.</p>
+
+    <p style="margin-bottom:1.2rem;color:#555;font-size:1.05rem;">Membre actif de <strong style="color:var(--navy);">Striving For All (SFA)</strong>, je partage ce que j'apprends parce que la connaissance qui ne se partage pas ne sert a rien.</p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-item"><div class="num">3</div><div class="lbl">Projets majeurs</div></div>
+    <div class="stat-item"><div class="num">5</div><div class="lbl">Certificats SFA</div></div>
+    <div class="stat-item"><div class="num">1</div><div class="lbl">Package PyPI publie</div></div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Aboubakar Mohaman — Construit avec Python, du cafe, et beaucoup d'aide de l'IA pour le CSS</p>
+</footer>
+
+<script>
+(function() {
+  var els = document.querySelectorAll('.stat-item');
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(function(el) { el.classList.add('reveal'); obs.observe(el); });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aboubakar Mohaman | Competences</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="logo">AB<span>.</span>Mohaman</div>
+  <ul>
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="about.html">A propos</a></li>
+    <li><a href="skills.html" class="active">Competences</a></li>
+    <li><a href="projects.html">Projets</a></li>
+    <li><a href="interests.html">Centres d'interet</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="page-section">
+  <h2 class="section-title">Mes competences</h2>
+  <div class="section-subtitle">(La version honnete — parce que je ne vais pas vous vendre du vent)</div>
+  <div class="divider"></div>
+  <div class="skills-grid">
+
+    <div class="skill-card python">
+      <div class="icon-row">
+        <lord-icon src="https://cdn.lordicon.com/lupuorrc.json" trigger="loop" delay="2000" colors="primary:#0F3460,secondary:#3776AB" style="width:44px;height:44px"></lord-icon>
+        <h3>Python & Data Science — mon royaume</h3>
+      </div>
+      <ul>
+        <li>Python, mon langage de coeur (et de nuit)</li>
+        <li>Flask — des APIs REST en un clin d'oeil</li>
+        <li>Pandas, NumPy — je parle le langage des donnees</li>
+        <li>scikit-learn — le ML sans prise de tete</li>
+      </ul>
+      <div class="fun-note">Si ca se fait en Python, je suis deja en train de le coder.</div>
+    </div>
+
+    <div class="skill-card db">
+      <div class="icon-row">
+        <lord-icon src="https://cdn.lordicon.com/kiynvdns.json" trigger="loop" delay="2000" colors="primary:#0F3460,secondary:#336791" style="width:44px;height:44px"></lord-icon>
+        <h3>Bases de donnees — la ou je stocke tout</h3>
+      </div>
+      <ul>
+        <li>PostgreSQL avec DBeaver, la classe pro</li>
+        <li>SQLite pour le dev, leger et efficace</li>
+        <li>Neon.tech — ma DB dans les nuages</li>
+        <li>SQL ? Je le parle couramment (litteralement)</li>
+      </ul>
+      <div class="fun-note">SELECT * FROM competences WHERE domaine = 'BDD' — ca retourne trop de lignes.</div>
+    </div>
+
+    <div class="skill-card frontend">
+      <div class="icon-row">
+        <lord-icon src="https://cdn.lordicon.com/nocovwde.json" trigger="loop" delay="2000" colors="primary:#0F3460,secondary:#E8B84B" style="width:44px;height:44px"></lord-icon>
+        <h3>Frontend — l'IA gere pour moi</h3>
+      </div>
+      <ul>
+        <li>HTML/CSS — je sais, mais l'IA fait mieux</li>
+        <li>React — je comprends le concept (vraiment)</li>
+        <li>Jinja2 — mon seul vrai templating, merci Flask</li>
+        <li>PWA — parce que meme mon minimalisme merite d'etre installable</li>
+      </ul>
+      <div class="fun-note">Ce portfolio ? 100% moi pour le fond, 90% l'IA pour la forme. Assume.</div>
+    </div>
+
+    <div class="skill-card tools">
+      <div class="icon-row">
+        <lord-icon src="https://cdn.lordicon.com/xxjfcfiy.json" trigger="loop" delay="2000" colors="primary:#0F3460,secondary:#6C63FF" style="width:44px;height:44px"></lord-icon>
+        <h3>Outils & Environnement</h3>
+      </div>
+      <ul>
+        <li>Git/GitHub — pour versionner sans pleurer</li>
+        <li>Vercel — un clic et c'est en ligne</li>
+        <li>PyCharm — la ou la magie opere</li>
+        <li>Obsidian — documenter sans s'endormir</li>
+        <li>PyPI — j'ai publie un package, un de plus et je suis officiel</li>
+      </ul>
+      <div class="fun-note">J'utilise tellement PyCharm que JetBrains devrait me sponsoriser.</div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Aboubakar Mohaman — Construit avec Python, du cafe, et beaucoup d'aide de l'IA pour le CSS</p>
+</footer>
+
+<script>
+(function() {
+  var els = document.querySelectorAll('.skill-card');
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(function(el) { el.classList.add('reveal'); obs.observe(el); });
+})();
+</script>
+
+</body>
+</html>
