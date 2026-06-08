@@ -62,7 +62,9 @@
   .page {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     padding: 2.4rem 2.8rem 2rem 3.2rem;
-    background: linear-gradient(135deg, #faf8f5, #f5f0ea);
+    background:
+      linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+      url('https://portfolio-aboubakar-psi.vercel.app/figma/cover.png') center/cover;
     border-radius: 4px 16px 16px 4px;
     box-shadow:
       inset 0 0 30px rgba(0,0,0,0.03),
@@ -73,7 +75,14 @@
     transition: transform 0.7s cubic-bezier(.65,0,.35,1), box-shadow 0.7s;
     overflow-y: auto;
     display: flex; flex-direction: column;
+    color: #fff;
   }
+  .pages .page:nth-child(2) { background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://portfolio-aboubakar-psi.vercel.app/figma/about.png') center/cover; }
+  .pages .page:nth-child(3) { background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://portfolio-aboubakar-psi.vercel.app/figma/skills.png') center/cover; }
+  .pages .page:nth-child(4) { background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://portfolio-aboubakar-psi.vercel.app/figma/projects.png') center/cover; }
+  .pages .page:nth-child(5) { background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://portfolio-aboubakar-psi.vercel.app/figma/interests.png') center/cover; }
+  .pages .page:nth-child(6) { background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://portfolio-aboubakar-psi.vercel.app/figma/contact.png') center/cover; }
+  .pages .page:nth-child(7) { background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://portfolio-aboubakar-psi.vercel.app/figma/thanks.png') center/cover; }
   .page::-webkit-scrollbar { width: 4px; }
   .page::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
 
@@ -100,7 +109,9 @@
 
   /* ── Cover page content ── */
   .page.page-cover-content {
-    background: linear-gradient(135deg, #0f1a2e, #1a2a4a);
+    background:
+      linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+      url('https://portfolio-aboubakar-psi.vercel.app/figma/cover.png') center/cover;
     border: none; color: #fff;
   }
   .page-cover-content::after { display: none; }
@@ -115,8 +126,8 @@
   }
   .cover-inner h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: 1px; }
   .cover-inner h1 span { color: var(--gold); }
-  .cover-inner .sub { color: #8fa8c8; font-size: 1rem; margin-bottom: 0.3rem; }
-  .cover-inner .tagline { color: #6c7a92; font-size: 0.85rem; margin-bottom: 1.5rem; }
+  .cover-inner .sub { color: #c8d8e8; font-size: 1rem; margin-bottom: 0.3rem; }
+  .cover-inner .tagline { color: #aab8c8; font-size: 0.85rem; margin-bottom: 1.5rem; }
   .cover-btns { display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center; }
   .cover-btns a {
     padding: 0.6rem 1.6rem; border-radius: 50px; font-weight: 600; font-size: 0.85rem;
@@ -143,91 +154,95 @@
     color: var(--gold); font-weight: 700; margin-bottom: 0.2rem;
   }
   .page-title {
-    font-size: 1.6rem; font-weight: 700; color: var(--navy);
+    font-size: 1.6rem; font-weight: 700; color: #fff;
     margin-bottom: 0.1rem;
   }
   .page-divider { width: 50px; height: 2px; background: var(--gold); margin: 0.6rem 0 1rem; }
 
-  .page-text { font-size: 0.92rem; color: #444; line-height: 1.7; margin-bottom: 0.8rem; }
-  .page-text strong { color: var(--navy); }
+  .page-text { font-size: 0.92rem; color: #ddd; line-height: 1.7; margin-bottom: 0.8rem; }
+  .page-text strong { color: var(--gold); }
 
   /* stats */
   .stats-mini { display: flex; gap: 1rem; margin-top: 0.8rem; flex-wrap: wrap; }
   .stats-mini div {
-    background: #fff; border-radius: 10px; padding: 0.6rem 1.2rem;
-    border: 1px solid #eee; text-align: center; min-width: 90px;
+    background: rgba(255,255,255,0.08); border-radius: 10px; padding: 0.6rem 1.2rem;
+    border: 1px solid rgba(255,255,255,0.15); text-align: center; min-width: 90px;
+    backdrop-filter: blur(4px);
   }
-  .stats-mini .num { font-size: 1.3rem; font-weight: 800; color: var(--navy); }
-  .stats-mini .lbl { font-size: 0.7rem; color: #888; }
+  .stats-mini .num { font-size: 1.3rem; font-weight: 800; color: var(--gold); }
+  .stats-mini .lbl { font-size: 0.7rem; color: #bbb; }
 
   /* skills in book */
   .skills-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.5rem; }
   .skill-mini {
-    background: #fff; border-radius: 10px; padding: 0.8rem 1rem;
-    border: 1px solid #eee; border-left: 3px solid var(--navy);
+    background: rgba(255,255,255,0.08); border-radius: 10px; padding: 0.8rem 1rem;
+    border: 1px solid rgba(255,255,255,0.15); border-left: 3px solid var(--gold);
+    backdrop-filter: blur(4px);
   }
-  .skill-mini h4 { font-size: 0.85rem; color: var(--navy); margin-bottom: 0.2rem; }
-  .skill-mini p { font-size: 0.78rem; color: #666; line-height: 1.4; }
+  .skill-mini h4 { font-size: 0.85rem; color: #fff; margin-bottom: 0.2rem; }
+  .skill-mini p { font-size: 0.78rem; color: #ccc; line-height: 1.4; }
   .skill-mini.gold { border-left-color: var(--gold); }
   .skill-mini.green { border-left-color: var(--green); }
   .skill-mini.purple { border-left-color: var(--purple); }
   .skill-mini .tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.3rem; }
   .skill-mini .tags span {
-    background: #eef2f7; color: var(--navy); font-size: 0.65rem;
+    background: rgba(255,255,255,0.15); color: #fff; font-size: 0.65rem;
     padding: 0.1rem 0.5rem; border-radius: 50px;
   }
 
   /* projects in book */
   .project-mini {
-    background: #fff; border-radius: 10px; padding: 0.9rem 1rem; margin-bottom: 0.7rem;
-    border: 1px solid #eee; transition: all .3s;
+    background: rgba(255,255,255,0.08); border-radius: 10px; padding: 0.9rem 1rem; margin-bottom: 0.7rem;
+    border: 1px solid rgba(255,255,255,0.15); transition: all .3s;
+    backdrop-filter: blur(4px);
   }
-  .project-mini:hover { transform: translateX(4px); box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
+  .project-mini:hover { transform: translateX(4px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
   .project-mini .p-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.2rem; }
-  .project-mini h4 { font-size: 0.95rem; color: var(--navy); }
+  .project-mini h4 { font-size: 0.95rem; color: #fff; }
   .project-mini .p-badge {
     background: var(--gold); color: var(--dark); font-size: 0.6rem; font-weight: 700;
     padding: 0.15rem 0.6rem; border-radius: 50px; text-transform: uppercase;
   }
-  .project-mini p { font-size: 0.78rem; color: #666; line-height: 1.4; }
+  .project-mini p { font-size: 0.78rem; color: #ccc; line-height: 1.4; }
   .project-mini .p-tech { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.3rem; }
   .project-mini .p-tech span {
-    background: #eef2f7; color: var(--navy); font-size: 0.6rem;
+    background: rgba(255,255,255,0.15); color: #fff; font-size: 0.6rem;
     padding: 0.1rem 0.5rem; border-radius: 50px;
   }
 
   /* interests in book */
   .interests-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
   .interest-mini {
-    background: #fff; border-radius: 10px; padding: 0.8rem 1rem;
-    border: 1px solid #eee; text-align: center;
+    background: rgba(255,255,255,0.08); border-radius: 10px; padding: 0.8rem 1rem;
+    border: 1px solid rgba(255,255,255,0.15); text-align: center;
+    backdrop-filter: blur(4px);
   }
-  .interest-mini h4 { font-size: 0.85rem; color: var(--navy); margin-bottom: 0.2rem; }
-  .interest-mini p { font-size: 0.75rem; color: #666; line-height: 1.4; }
+  .interest-mini h4 { font-size: 0.85rem; color: #fff; margin-bottom: 0.2rem; }
+  .interest-mini p { font-size: 0.75rem; color: #ccc; line-height: 1.4; }
   .interest-mini lord-icon { width: 36px; height: 36px; margin-bottom: 0.3rem; }
 
   /* contact in book */
   .contact-row {
     display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 0.5rem;
   }
-  .contact-info p { font-size: 0.85rem; color: #444; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
-  .contact-info a { color: var(--navy); font-weight: 500; }
-  .contact-info a:hover { color: var(--gold); }
+  .contact-info p { font-size: 0.85rem; color: #ddd; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+  .contact-info a { color: var(--gold); font-weight: 500; }
+  .contact-info a:hover { color: #fff; }
   .contact-form input, .contact-form textarea {
     width: 100%; padding: 0.6rem 0.8rem; margin-bottom: 0.6rem;
-    border: 1px solid #ddd; border-radius: 8px; font-size: 0.85rem;
-    font-family: inherit; background: #fff; transition: all .3s;
+    border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; font-size: 0.85rem;
+    font-family: inherit; background: rgba(255,255,255,0.08); color: #fff; transition: all .3s;
   }
   .contact-form input:focus, .contact-form textarea:focus {
-    outline: none; border-color: var(--gold); box-shadow: 0 0 10px rgba(232,184,75,0.1);
+    outline: none; border-color: var(--gold); box-shadow: 0 0 10px rgba(232,184,75,0.2);
   }
   .contact-form textarea { min-height: 70px; resize: vertical; }
   .contact-form button {
-    background: var(--navy); color: #fff; border: none; padding: 0.6rem 1.5rem;
+    background: var(--gold); color: var(--dark); border: none; padding: 0.6rem 1.5rem;
     border-radius: 8px; font-size: 0.85rem; cursor: pointer; font-weight: 600;
     transition: all .3s;
   }
-  .contact-form button:hover { background: var(--gold); color: var(--dark); }
+  .contact-form button:hover { background: #fff; color: var(--dark); }
 
   /* ── Navigation ── */
   .nav-controls {
@@ -437,7 +452,7 @@
             <p>📦 <a href="https://pypi.org/project/vibetodev/" target="_blank">pypi.org/project/vibetodev</a></p>
             <p>📍 Douala, Cameroun</p>
             <br>
-            <p style="font-size:0.85rem;color:#888;"><em>Disponible pour un stage en IA et Data</em></p>
+            <p style="font-size:0.85rem;color:#bbb;"><em>Disponible pour un stage en IA et Data</em></p>
           </div>
           <div class="contact-form">
             <form action="mailto:aboubakar.mohaman@sfaedu.org" method="post" enctype="text/plain">
