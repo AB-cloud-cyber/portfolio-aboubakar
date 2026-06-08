@@ -18,16 +18,23 @@ import glob
 all_pngs = glob.glob(os.path.join(bg_base, "*.png"))
 print("Available PNGs:", all_pngs)
 
-# Use the 1920x1080 ones
+# Use only large cosmic backgrounds (exclude small thumbnails)
 bgs = []
 for p in all_pngs:
-    if "cosmic" not in p and "caisse" not in p and "connectpro" not in p and "dbeaver" not in p and "matplotlib" not in p and "sfa" not in p and "vibetodev" not in p and "basket" not in p:
-        img = Image.open(p).resize((W, H))
-        print(f"  Using bg: {p} ({img.size})")
-        bgs.append(img)
+    basename = os.path.basename(p)
+    if any(x in basename.lower() for x in ["cosmic", "caisse", "connectpro", "dbeaver", "matplotlib", "sfa", "vibetodev", "basket", "cover", "about", "skills", "projects", "interests", "contact", "thanks"]):
+        continue
+    if basename.lower().strip() == "oip.png":
+        continue
+    img = Image.open(p)
+    if img.size[0] < 1000 or img.size[1] < 600:
+        print(f"  SKIP (too small): {p} ({img.size})")
+        continue
+    img = img.resize((W, H), Image.LANCZOS)
+    print(f"  Using bg: {p} ({img.size})")
+    bgs.append(img)
 
-if len(bgs) < 7:
-    # Duplicate to fill 7 slides
+if len(bgs) < len(["Cover","About","Skills","Projects","Interests","Contact","Thanks"]):
     while len(bgs) < 7:
         bgs.append(bgs[len(bgs) % len(bgs)])
 
